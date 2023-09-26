@@ -4,7 +4,7 @@ from core.models import Base_image
 # Create your models here.
 # 공지
 class Notification(models.Model):
-    id = models.BigIntegerField(primary_key=True)
+    id = models.IntegerField(primary_key=True)
     # max_length 협의 후 수정
     title = models.CharField(max_length=255)
     # text, char 협의 후 수정 
@@ -22,7 +22,7 @@ class Notification(models.Model):
 
 # 홍보
 class Promotion(models.Model):
-    id = models.BigIntegerField(primary_key=True)
+    id = models.IntegerField(primary_key=True)
     # max_length 협의 후 수정
     title = models.CharField(max_length=255)
     # text필드인지, char필드인지 협의 후 수정 
