@@ -4,7 +4,7 @@ from core.models import Base_image
 # Create your models here.
 # 부스
 class Booth(models.Model):
-    id = models.BigIntegerField(primary_key=True)
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=255)
     TYPE_CHOICES=(
         # 자유롭게 수정
