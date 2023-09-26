@@ -1,4 +1,5 @@
 from django.db import models
+from core.models import Base_image
 
 # Create your models here.
 # 부스
@@ -51,5 +52,5 @@ class Booth_like(models.Model):
 
 # 부스 이미지
 # 이부분은 봄 축제 참고하였음. 수정 시 알려주세용
-class Booth_image(models.Model):
+class Booth_image(Base_image):
     booth=models.ForeignKey(Booth, on_delete=models.CASCADE, related_name='boothimages')

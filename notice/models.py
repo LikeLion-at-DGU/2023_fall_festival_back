@@ -1,4 +1,5 @@
 from django.db import models
+from core.models import Base_image
 
 # Create your models here.
 # 공지
@@ -38,9 +39,9 @@ class Promotion(models.Model):
 
 # 공지, 홍보 이미지
 # 이부분은 봄 축제 참고하였음. 수정 시 알려주세용
-class Notification_image(models.Model):
+class Notification_image(Base_image):
     notification=models.ForeignKey(Notification, on_delete=models.CASCADE, related_name='notificationimages')
 
 # 이부분은 봄 축제 참고하였음. 수정 시 알려주세용
-class Promotion_image(models.Model):
+class Promotion_image(Base_image):
     promotion=models.ForeignKey(Promotion, on_delete=models.CASCADE, related_name='promotionimages')
