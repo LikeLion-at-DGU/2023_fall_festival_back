@@ -27,7 +27,7 @@ class Booth(models.Model):
         # ('학림관','학림관'),
     )
     location = models.CharField(max_length=10, choices=LOCATION_CHOICES)
-    description = models.CharField()
+    description = models.CharField(max_length=255)
     start_at = models.DateTimeField(null=True, blank=True)
     end_at = models.DateTimeField(null=True, blank=True)
     # 필요시 사용하는 필드와 함수
