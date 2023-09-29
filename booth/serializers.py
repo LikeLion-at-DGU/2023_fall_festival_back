@@ -105,7 +105,8 @@ class BoothSerializer(serializers.ModelSerializer):
             'like_cnt',
             'during',
             'thumbnail',
-            'images'
+            'images',
+            'insta_url'
         ]
 
 class LikeSerializer(serializers.ModelSerializer):
