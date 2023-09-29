@@ -2,7 +2,7 @@ import secrets
 
 from django.utils import timezone
 from django.shortcuts import render
-from django.db.models import Count, F, ExpressionWrapper, DateField
+from django.db.models import Count
 from django.db.models.functions import Extract
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
