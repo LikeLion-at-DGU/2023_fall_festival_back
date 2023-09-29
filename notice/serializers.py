@@ -11,7 +11,8 @@ class NotificationImageSerializer(serializers.ModelSerializer):
 
 class NotificationSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField()
-
+    thumbnail = serializers.SerializerMethodField()
+    
     def get_images(self, instance):
         request=self.context.get('request')
         noticeimage=instance.notificationimages.all().order_by('id')
@@ -25,9 +26,17 @@ class NotificationSerializer(serializers.ModelSerializer):
         except:
             return None
     
+    def get_thumbnail(self, instance):
+        request = self.context.get('request')
+        first_image = instance.notificationimages.first()
+        if first_image:
+            thumbnail_url = request.build_absolute_uri(first_image.image.url)
+            return thumbnail_url
+        return None
+    
     class Meta:
         model = Notification
-        fields = ['id', 'title','type','content','created_at','images']
+        fields = ['id', 'title','type','content','created_at','images', 'thumbnail']
         
 
         

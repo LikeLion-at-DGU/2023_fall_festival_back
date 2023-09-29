@@ -27,6 +27,14 @@ class NotificationViewSet(
     serializer_class = NotificationSerializer
     queryset = Notification.objects.all()
     
+    # 공지 게시물 첫번째 이미지를 썸네일로 지정
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        first_image = instance.notificationimages.first()
+        if first_image:
+            instance.thumbnail = first_image.image.url
+            instance.save()
+    
 
 
 # 홍보 type 필터링
@@ -50,7 +58,7 @@ class PromotionViewSet(
     queryset = Promotion.objects.all()
     
 
-    # 첫번째 이미지를 썸네일로 지정
+    # 홍보 게시물 첫번째 이미지를 썸네일로 지정
     def perform_create(self, serializer):
         instance = serializer.save()
         first_image = instance.promotionimages.first()
