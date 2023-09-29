@@ -13,15 +13,6 @@ class NotificationViewSet(
     serializer_class = NotificationSerializer
     queryset = Notification.objects.all()
     
-    
-# class PromotionViewSet(
-#     mixins.ListModelMixin,
-#     mixins.RetrieveModelMixin,
-#     viewsets.GenericViewSet,
-# ):
-#     serializer_class = PromotionSerializer
-#     queryset = Promotion.objects.all()
-
 
 class PromotionViewSet(viewsets.ModelViewSet):
     queryset = Promotion.objects.all()
