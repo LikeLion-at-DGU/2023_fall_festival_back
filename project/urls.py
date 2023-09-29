@@ -35,7 +35,7 @@ public=True,)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("api/", include('notice.urls')),
+    path("api/v1/", include('notice.urls')),
     path('api/v1/', include('booth.urls')),
     
     # swagger 관련
