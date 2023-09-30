@@ -1,5 +1,5 @@
 from django.db import models
-from core.models import Base_image
+from core.models import *
 
 # 부스
 class Booth(models.Model):
@@ -49,3 +49,5 @@ class Booth_like(models.Model):
 # 부스 이미지
 class Booth_image(Base_image):
     booth=models.ForeignKey(Booth, on_delete=models.CASCADE, related_name='boothimages')
+    # 호연 임의
+    image = models.ImageField(upload_to=booth_image_upload_path, blank=True, null=True)

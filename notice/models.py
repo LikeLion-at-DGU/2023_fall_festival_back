@@ -1,5 +1,5 @@
 from django.db import models
-from core.models import Base_image
+from core.models import *
 
 # Create your models here.
 # 공지
@@ -35,13 +35,16 @@ class Promotion(models.Model):
     )
     type = models.CharField(max_length=10, choices=TYPE_CHOICES)
     # 필요시 추가하세요
-    # thumbnail = models.ImageField()
+    # thumbnail = models.ImageField(upload_to='promotion_thumbnails/', blank=True, null=True)
+
+
 
 # 공지, 홍보 이미지
-# 이부분은 봄 축제 참고하였음. 수정 시 알려주세용
 class Notification_image(Base_image):
-    notification=models.ForeignKey(Notification, on_delete=models.CASCADE, related_name='notificationimages')
+    notification = models.ForeignKey(Notification, on_delete=models.CASCADE, related_name='notificationimages')
+    image = models.ImageField(upload_to=notification_image_upload_path, blank=True, null=True)
 
-# 이부분은 봄 축제 참고하였음. 수정 시 알려주세용
+
 class Promotion_image(Base_image):
-    promotion=models.ForeignKey(Promotion, on_delete=models.CASCADE, related_name='promotionimages')
+    promotion = models.ForeignKey(Promotion, on_delete=models.CASCADE, related_name='promotionimages')
+    image = models.ImageField(upload_to=promotion_image_upload_path, blank=True, null=True)
