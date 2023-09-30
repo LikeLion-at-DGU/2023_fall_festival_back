@@ -27,6 +27,12 @@ class NotificationViewSet(
     serializer_class = NotificationSerializer
     queryset = Notification.objects.all()
     
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return NotificationListSerializer
+        return NotificationSerializer
+    
+    
     # 공지 게시물 첫번째 이미지를 썸네일로 지정
     def perform_create(self, serializer):
         instance = serializer.save()
@@ -56,6 +62,11 @@ class PromotionViewSet(
     pagination_class = PromotePagination
     serializer_class = PromotionSerializer
     queryset = Promotion.objects.all()
+    
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return PromotionListSerializer
+        return PromotionSerializer
     
 
     # 홍보 게시물 첫번째 이미지를 썸네일로 지정

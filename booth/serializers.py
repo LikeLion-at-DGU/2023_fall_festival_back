@@ -6,6 +6,7 @@ class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booth_image
         fields = ['image']
+            
 
 class BoothListSerializer(serializers.ModelSerializer):
 
@@ -35,7 +36,6 @@ class BoothListSerializer(serializers.ModelSerializer):
         ]
 
 class BoothSerializer(serializers.ModelSerializer):
-    
     like_cnt = serializers.IntegerField()
     
 

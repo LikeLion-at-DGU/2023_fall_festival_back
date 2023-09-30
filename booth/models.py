@@ -1,5 +1,5 @@
 from django.db import models
-from core.models import Base_image
+from core.models import *
 
 # 부스
 class Booth(models.Model):
