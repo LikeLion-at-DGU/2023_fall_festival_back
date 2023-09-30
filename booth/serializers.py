@@ -1,17 +1,15 @@
 from rest_framework import serializers
 from .models import Booth, Booth_like, Booth_image
 
-# class ImageSerializer(serializers.ModelSerializer):
 class BoothImageSerializer(serializers.ModelSerializer):
-    image = serializers.ImageField(use_url=True) #호연
+    image = serializers.ImageField(use_url=True)
     
     class Meta:
         model = Booth_image
         fields = ['image']
             
-
 class BoothListSerializer(serializers.ModelSerializer):
-    thumbnail = serializers.SerializerMethodField() #호연
+    thumbnail = serializers.SerializerMethodField() 
     like_cnt = serializers.IntegerField()
 
     is_liked = serializers.SerializerMethodField()
@@ -23,7 +21,6 @@ class BoothListSerializer(serializers.ModelSerializer):
             return booth_id in request.COOKIES.keys()
         return False
 
-    # 호연
     def get_thumbnail(self, instance):
         request = self.context.get('request')
         first_image = instance.boothimages.first()
@@ -42,14 +39,14 @@ class BoothListSerializer(serializers.ModelSerializer):
             'location',
             'like_cnt',
             'is_liked',
-            'thumbnail', #호연
+            'thumbnail',
         ]
 
 
 class BoothSerializer(serializers.ModelSerializer):
     like_cnt = serializers.IntegerField()
-    images = serializers.SerializerMethodField() #호연
-    thumbnail = serializers.SerializerMethodField() #호연
+    images = serializers.SerializerMethodField()
+    thumbnail = serializers.SerializerMethodField() 
     during = serializers.SerializerMethodField()
     
     def get_during(self, instance):
@@ -67,10 +64,9 @@ class BoothSerializer(serializers.ModelSerializer):
             return booth_id in request.COOKIES.keys()
         return False
     
-    # 호연
     def get_images(self, instance):
         request=self.context.get('request')
-        boothimage=instance.boothimages.all().order_by('id')
+        boothimage=instance.boothimages.all().order_by('id')[1:]
         try:
             noticeimage_serializer=BoothImageSerializer(boothimage, many=True)
             outcome = []
@@ -80,8 +76,7 @@ class BoothSerializer(serializers.ModelSerializer):
             return outcome
         except:
             return None
-        
-    # 호연
+
     def get_thumbnail(self, instance):
         request = self.context.get('request')
         first_image = instance.boothimages.first()
@@ -101,8 +96,8 @@ class BoothSerializer(serializers.ModelSerializer):
             'is_liked',
             'like_cnt',
             'during',
-            'images', #호연
-            'thumbnail', #호연
+            'images',
+            'thumbnail',
         ]
 
             
