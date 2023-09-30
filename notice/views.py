@@ -34,7 +34,7 @@ class NotificationViewSet(
     
     
     # 공지 게시물 첫번째 이미지를 썸네일로 지정
-    def perform_create(self, serializer):
+    def thumbnail_create(self, serializer):
         instance = serializer.save()
         first_image = instance.notificationimages.first()
         if first_image:
@@ -70,9 +70,11 @@ class PromotionViewSet(
     
 
     # 홍보 게시물 첫번째 이미지를 썸네일로 지정
-    def perform_create(self, serializer):
+    def thumbnail_create(self, serializer):
         instance = serializer.save()
         first_image = instance.promotionimages.first()
         if first_image:
             instance.thumbnail = first_image.image.url
             instance.save()
+            
+    #perform_create

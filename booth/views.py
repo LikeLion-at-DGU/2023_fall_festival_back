@@ -39,6 +39,15 @@ class BoothViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Retrie
             return BoothListSerializer
         return BoothSerializer
     
+    # 호연   
+    # 부스 게시물 첫번째 이미지를 썸네일로 지정
+    def thumbnail_create(self, serializer):
+        instance = serializer.save()
+        first_image = instance.boothimages.first()
+        if first_image:
+            instance.thumbnail = first_image.image.url
+            instance.save()
+    
     # 핫부스 TOP3
     @action(methods=['GET'], detail=False)
     def hot(self, request):
