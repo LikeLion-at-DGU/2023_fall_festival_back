@@ -1,5 +1,5 @@
 from django.db import models
-from core.models import Base_image
+from core.models import *
 
 # 부스
 class Booth(models.Model):
@@ -27,12 +27,6 @@ class Booth(models.Model):
     
     def __str__(self):
         return self.name
-    
-    # 필요시 사용하는 필드와 함수
-    # is_liked = models.BooleanField(null=True, blank=True, default=False)
-    # thumbnail = models.ImageField(null=True, blank=True)
-    # during = models.DateTimeField(null=True, blank=True)
-
 
 # 부스 좋아요
 class Booth_like(models.Model):
@@ -49,3 +43,4 @@ class Booth_like(models.Model):
 # 부스 이미지
 class Booth_image(Base_image):
     booth=models.ForeignKey(Booth, on_delete=models.CASCADE, related_name='boothimages')
+    image = models.ImageField(upload_to=booth_image_upload_path, blank=True, null=True)
