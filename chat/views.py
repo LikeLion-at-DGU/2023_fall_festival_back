@@ -27,13 +27,26 @@ class ChatViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Retri
     def dataleft(self, request):
         # id가 홀수인 방명록만 가져오기
         dataleft = self.get_queryset().extra(where=["id % 2 = 1"]) 
+        page = self.paginate_queryset(dataleft)
+        
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        
         serializer = self.get_serializer(dataleft, many=True)
         return Response(serializer.data)
+
     
     # 방명록의 오른쪽 열에 대한 api
     @action(detail=False, methods=['GET'], url_path='dataright')
     def dataright(self, request):
         # id가 짝수인 방명록만 가져오기
         dataright = self.get_queryset().extra(where=["id % 2 = 0"]) 
+        page = self.paginate_queryset(dataright)
+        
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        
         serializer = self.get_serializer(dataright, many=True)
         return Response(serializer.data)
