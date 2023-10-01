@@ -3,9 +3,6 @@ from .models import Chat
 
 class ChatSerializer(serializers.ModelSerializer):
 
-    def create(self, validated_data):
-        chat = Chat.objects.get(id=self.context.get("view"))
-    
     class Meta:
         model = Chat
         fields = ['id', 'content', 'created_at', 'icon', 'key']

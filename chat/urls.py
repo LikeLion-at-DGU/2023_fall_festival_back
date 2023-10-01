@@ -5,9 +5,9 @@ from .views import *
 
 app_name = 'chat'
 
-chat_router = routers.SimpleRouter(trailing_slash=False)
-chat_router.register('chat', ChatViewSet, basename='chat')
+default_router = routers.SimpleRouter(trailing_slash=False)
+default_router.register('chat', ChatViewSet, basename='chat')
 
 urlpatterns = [
-    path('', include(chat_router.urls)),
+    path('', include(default_router.urls)),
 ]
