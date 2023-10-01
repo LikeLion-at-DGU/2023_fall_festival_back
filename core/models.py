@@ -1,7 +1,6 @@
 from django.db import models
 
-# Create your models here.
-# 봄 축제 복붙입니다.
+
 def image_upload_path(instance, filename):
     return f'{instance.pk}/{filename}'
 
