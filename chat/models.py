@@ -7,6 +7,18 @@ class Chat(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     # min_length, max_length 10~100인데 프론트와 협의 후 변경
     content = models.TextField()
+    ICON_CHOICES=(
+        ('cry','cry'),
+        ('hip','hip'),
+        ('festival','festival'),
+        ('fire','fire'),
+        ('heart','heart'),
+    )
+    icon = models.CharField(
+        max_length=10,
+        choices=ICON_CHOICES,
+        default='cry',
+    )
     key=models.CharField(
         max_length=10,
         blank=True,
@@ -14,4 +26,4 @@ class Chat(models.Model):
     )
     
     def __str__(self):
-        return f'{self.booth}/{self.key}'
+        return f'{self.chat}/{self.key}'
