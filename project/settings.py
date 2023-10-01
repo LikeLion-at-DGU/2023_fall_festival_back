@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     # Local apps
     'booth',
     'chat',
-    'core',
     'notice',
     'core',
 ]
