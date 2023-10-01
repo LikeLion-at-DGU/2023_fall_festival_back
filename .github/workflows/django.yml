@@ -20,7 +20,7 @@ jobs:
       shell: bash
       run: |
         touch .env
-        echo SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }} >> .env
+        echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
         cat .env
 
     - name: Set up Python 3.8
