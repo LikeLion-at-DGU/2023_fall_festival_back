@@ -45,12 +45,6 @@ jobs:
       run: |
         python3 manage.py test
 
-  
-    ###  makemigration & migrate 이부분은 CI/CD가 진행되면 db가 날라가기에 db를 분리하는 게 좋아보임
-    - name: migrate
-      run: |
-        python3 manage.py migrate
-
     ### Docker Image Build and Push ###
     - name: Login to Docker Hub
       if: github.event.pull_request.merged == true
