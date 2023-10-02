@@ -1,5 +1,6 @@
 import secrets
 
+from django.utils import timezone
 from django.shortcuts import render
 from django.db.models import Count, F, ExpressionWrapper, DateField
 from django.db.models.functions import Extract
@@ -42,6 +43,9 @@ class BoothViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Retrie
     # 핫부스 TOP3
     @action(methods=['GET'], detail=False)
     def hot(self, request):
+        # 실제로 서비스하면 아래 코드로 바꾸겟습니다.
+        # current_time = timezone.now()
+        # top3 = self.get_queryset().filter(start_at__lte=current_time, end_at__gte=current_time).order_by('-like_cnt')[:3]
         top3 = self.get_queryset().order_by('-like_cnt')[:3]
         top3_serializer = BoothListSerializer(top3, many=True, context = {'request': request})
         return Response( top3_serializer.data )
