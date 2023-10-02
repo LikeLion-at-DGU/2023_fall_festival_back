@@ -4,6 +4,7 @@ from django.utils import timezone
 from rest_framework import mixins, viewsets, status
 from rest_framework.decorators import action
 from .models import *
+from django.db.models import F, ExpressionWrapper, IntegerField
 from .serializers import ChatSerializer
 from rest_framework.response import Response
 from .paginations import ChatPagination
@@ -71,7 +72,7 @@ class ChatViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Retri
     @action(detail=False, methods=['GET'], url_path='dataleft')
     def dataleft(self, request):
         # id가 홀수인 방명록만 가져오기
-        dataleft = self.get_queryset().extra(where=["id % 2 = 1"]) 
+        dataleft = self.get_queryset().annotate(odd_id=ExpressionWrapper(F('id') % 2, output_field=IntegerField())).filter(odd_id=1)
         page = self.paginate_queryset(dataleft)
         
         if page is not None:
@@ -86,7 +87,7 @@ class ChatViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Retri
     @action(detail=False, methods=['GET'], url_path='dataright')
     def dataright(self, request):
         # id가 짝수인 방명록만 가져오기
-        dataright = self.get_queryset().extra(where=["id % 2 = 0"]) 
+        dataright = self.get_queryset().annotate(even_id=ExpressionWrapper(F('id') % 2, output_field=IntegerField())).filter(even_id=0)
         page = self.paginate_queryset(dataright)
         
         if page is not None:
