@@ -24,6 +24,3 @@ class Chat(models.Model):
         blank=True,
         editable=False
     )
-    
-    def __str__(self):
-        return f'{self.chat}/{self.key}'
