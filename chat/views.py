@@ -1,10 +1,15 @@
 from django.shortcuts import render
+from django.utils import timezone
+
 from rest_framework import mixins, viewsets, status
 from rest_framework.decorators import action
 from .models import *
 from .serializers import ChatSerializer
 from rest_framework.response import Response
 from .paginations import ChatPagination
+from uuid import uuid4 
+from datetime import timedelta
+
 # Create your views here.
 
 class ChatViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.ListModelMixin):
@@ -15,12 +20,28 @@ class ChatViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Retri
     serializer_class = ChatSerializer
     pagination_class = ChatPagination
 
-    def create(self, reqest):
-        serializer = self.get_serializer(data=reqest.data)
+    def create(self, request):
+        key = request.COOKIES.get('key')
+        if not key:
+            key = str(uuid4())
+
+        cooltime_report = Chat.objects.filter(key=key).first()
+        if cooltime_report:
+            time_since_last_post = timezone.now() - cooltime_report.created_at
+            
+            # 현재 쿨타임 1초로 설정 ( 추후 서비스 때 30초로 변경예정 )
+            if time_since_last_post < timedelta(seconds=1):
+                return Response({'detail': '1초에 한 번만 글을 게시할 수 있습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        serializer.save(key = key)
+        headers = self.get_success_headers(serializer.data)
+        response = Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+        # 현재 쿨타임 1초로 설정 ( 추후 서비스 때 30초로 변경예정 )
+        response.set_cookie('key', key, max_age=1)
+        return response
 
     # 방명록의 왼쪽 열에 대한 api
     @action(detail=False, methods=['GET'], url_path='dataleft')
