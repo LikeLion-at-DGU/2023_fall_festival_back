@@ -7,10 +7,31 @@ from .models import *
 from .serializers import ChatSerializer
 from rest_framework.response import Response
 from .paginations import ChatPagination
+from django.conf import settings
+
+import os
 from uuid import uuid4 
 from datetime import timedelta
 
 # Create your views here.
+
+def load_swears(file_name):
+    file_path = os.path.join(settings.BASE_DIR, 'static', file_name)
+    with open(file_path, 'r', encoding='utf-8') as file:
+        swears = file.read().splitlines()
+    return swears
+
+SWEARS = load_swears('fword_list.txt')
+
+def censor_content(content):
+    is_abused = False
+    
+    for swear in SWEARS:
+        if swear in content:
+            content = content.replace(swear, '*' * len(swear))
+            is_abused = True
+            
+    return content, is_abused
 
 class ChatViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.ListModelMixin):
     # queryset 가져오는 함수 오버라이딩 (최신순으로 정렬)
@@ -32,10 +53,13 @@ class ChatViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Retri
             # 현재 대기시간 1초로 설정 ( 추후 서비스 때 30초로 변경예정 )
             if time_since_last_post < timedelta(seconds=1):
                 return Response({'detail': '1초에 한 번만 글을 게시할 수 있습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        content = request.data.get('content')
+        censored_content, is_abused = censor_content(content)
 
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(key = key)
+        serializer.save(key = key, content = censored_content, is_abused = is_abused)
         headers = self.get_success_headers(serializer.data)
         response = Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
