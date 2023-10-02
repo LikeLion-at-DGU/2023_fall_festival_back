@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG_VALUE', default=True)
 
 ALLOWED_HOSTS = ['*']
 
@@ -86,12 +86,26 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# 기본 설정 (개발환경)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# 배포환경에서의 설정
+if config('DJANGO_DEPLOY', default=False, cast=bool):
+    DATABASES = {
+        'default': {
+            'ENGINE': config('DATABASE_ENGINE'),
+            'NAME': config('DATABASE_NAME'),
+            'USER': config('DATABASE_USER'),
+            'PASSWORD': config('DATABASE_USER_PASSWORD'),
+            'HOST': config('DATABASE_HOST'),
+            'PORT': config('DATABASE_PORT')
+        }
+    }
 
 
 # Password validation
@@ -129,6 +143,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

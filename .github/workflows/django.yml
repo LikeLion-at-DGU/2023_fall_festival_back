@@ -21,6 +21,14 @@ jobs:
       run: |
         touch .env
         echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
+        echo DEBUG_VALUE=${{ secrets.DEBUG_VALUE }} >> .env
+        echo DJANGO_DEPLOY=${{ secrets.DJANGO_DEPLOY }} >> .env
+        echo DATABASE_ENGINE=${{ secrets.DATABASE_ENGINE }} >> .env
+        echo DATABASE_NAME=${{ secrets.DATABASE_NAME }} >> .env
+        echo DATABASE_USER=${{ secrets.DATABASE_USER }} >> .env
+        echo DATABASE_USER_PASSWORD=${{ secrets.DATABASE_USER_PASSWORD }} >> .env
+        echo DATABASE_HOST=${{ secrets.DATABASE_HOST }} >> .env
+        echo DATABASE_PORT=${{ secrets.DATABASE_PORT }} >> .env
         cat .env
 
     - name: Set up Python 3.8
@@ -85,4 +93,4 @@ jobs:
           docker stop festival2023-was
           docker rm festival2023-was
           docker image rm ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}
-          docker run -d --net festival -p 8000:8000 --name festival2023-was ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}
+          docker run -d --net festival -v festival-media:/app/media -v festival-static:/app/static -p 8000:8000 --name festival2023-was ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}
