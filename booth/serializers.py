@@ -98,6 +98,7 @@ class BoothSerializer(serializers.ModelSerializer):
             'during',
             'images',
             'thumbnail',
+            'insta_url'
         ]
 
             

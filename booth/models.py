@@ -24,7 +24,8 @@ class Booth(models.Model):
     description = models.CharField(max_length=255)
     start_at = models.DateTimeField(null=True, blank=True)
     end_at = models.DateTimeField(null=True, blank=True)
-    
+    insta_url = models.URLField(default="http://www.instagram.com/your_username/")
+
     def __str__(self):
         return self.name
 
