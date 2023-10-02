@@ -37,6 +37,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/v1/", include('notice.urls')),
     path('api/v1/', include('booth.urls')),
+    path('api/v1/', include('chat.urls')),
     
     # swagger 관련
     path('api/swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
