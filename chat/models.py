@@ -20,7 +20,7 @@ class Chat(models.Model):
         default='cry',
     )
     key=models.CharField(
-        max_length=10,
+        max_length=50,
         blank=True,
         editable=False
     )
