@@ -24,3 +24,4 @@ class Chat(models.Model):
         blank=True,
         editable=False
     )
+    is_abused = models.BooleanField(default=False)
