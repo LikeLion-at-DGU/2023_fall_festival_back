@@ -2,7 +2,7 @@ import secrets
 
 from django.utils import timezone
 from django.shortcuts import render
-from django.db.models import Count, F, ExpressionWrapper, DateField
+from django.db.models import Count, Q
 from django.db.models.functions import Extract
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
@@ -16,10 +16,11 @@ from .paginations import BoothPagination
 
 class BoothFilter(filters.FilterSet):
     date = filters.NumberFilter(field_name='date')
+    type = filters.MultipleChoiceFilter(field_name='type', choices=Booth.TYPE_CHOICES)
 
     class Meta:
         model = Booth
-        fields = ['start_at', 'location', 'type', 'date']
+        fields = ['location', 'type', 'date']
 
 class BoothViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin):
 
@@ -31,8 +32,7 @@ class BoothViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Retrie
         queryset = Booth.objects.annotate(
             like_cnt = Count('likes'),
             date = Extract('start_at', 'day')
-            
-        ) 
+        )
         return queryset
 
     def get_serializer_class(self):
