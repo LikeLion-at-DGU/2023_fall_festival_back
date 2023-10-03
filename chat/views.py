@@ -51,9 +51,9 @@ class ChatViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Retri
         if cooltime_report:
             time_since_last_post = timezone.now() - cooltime_report.created_at
 
-            # 현재 대기시간 1초로 설정 ( 추후 서비스 때 30초로 변경예정 )
-            if time_since_last_post < timedelta(seconds=1):
-                return Response({'detail': '1초에 한 번만 글을 게시할 수 있습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+            # 현재 대기시간 30초로 설정
+            if time_since_last_post < timedelta(seconds=30):
+                return Response({'detail': '30초에 한 번만 글을 게시할 수 있습니다.'}, status=status.HTTP_400_BAD_REQUEST)
         
         content = request.data.get('content')
         censored_content, is_abused = censor_content(content)
@@ -64,8 +64,8 @@ class ChatViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Retri
         headers = self.get_success_headers(serializer.data)
         response = Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-        # 현재 대기시간 1초로 설정 ( 추후 서비스 때 30초로 변경예정 )
-        response.set_cookie('key', key, max_age=1)
+        # 현재 대기시간 30초로 설정
+        response.set_cookie('key', key, max_age=30)
         return response
 
     # 방명록의 왼쪽 열에 대한 api
