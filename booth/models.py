@@ -8,7 +8,8 @@ class Booth(models.Model):
     TYPE_CHOICES=(
         ('주간부스','주간부스'),
         ('야간부스','야간부스'),
-        ('기타부스', '기타부스'),
+        ('플리마켓','플리마켓'),
+        ('푸드트럭','푸드트럭'),
     )
     type = models.CharField(max_length=10, choices=TYPE_CHOICES)
     operater = models.CharField(max_length=255)
