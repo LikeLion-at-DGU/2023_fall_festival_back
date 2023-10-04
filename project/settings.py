@@ -96,6 +96,10 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost',
     'http://localhost:3000',
     'http://localhost:5173',
+
+    'http://175.45.200.133',
+    'http://175.45.200.133:5173',
+    'http://175.45.200.133:8000',
 ]
 
 # Database
