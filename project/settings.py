@@ -104,6 +104,10 @@ CORS_ALLOWED_ORIGINS = [
     'http://www.dgu-yadan.site',
     'http://www.dgu-yadan.site:5173',
     'http://www.dgu-yadan.site:3000',
+
+    'http://http://223.130.131.241',
+    'http://http://223.130.131.241:5173',
+    'http://http://223.130.131.241:3000',
 ]
 
 # Database
