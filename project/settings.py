@@ -97,9 +97,9 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost:5173',
 
-    # 'http://175.45.200.133',
-    # 'http://175.45.200.133:5173',
-    # 'http://175.45.200.133:3000',
+    'http://175.45.200.133',
+    'http://175.45.200.133:5173',
+    'http://175.45.200.133:3000',
 
     'http://www.dgu-yadan.site',
     'http://www.dgu-yadan.site:5173',
