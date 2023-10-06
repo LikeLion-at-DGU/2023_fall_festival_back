@@ -107,10 +107,10 @@ CORS_ALLOWED_ORIGINS = [
     'http://www.dgu-yadan.site:3000',
 
 
-    'http://www.yadan-dgu.site',
-    'http://www.yadan-dgu.site:5173',
-    'http://www.yadan-dgu.site:3000',
-
+    'http://dgu-yadan.site',
+    'http://dgu-yadan.site:5173',
+    'http://dgu-yadan.site:3000',
+    
     'http://223.130.131.241',
     'http://223.130.131.241:5173',
     'http://223.130.131.241:3000',
