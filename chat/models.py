@@ -8,18 +8,18 @@ class Chat(models.Model):
     # min_length, max_length 10~100인데 프론트와 협의 후 변경
     content = models.TextField()
     ICON_CHOICES=(
-        ('cry','cry'),
         ('hip','hip'),
         ('festival','festival'),
         ('fire','fire'),
         ('heart','heart'),
         ('haapy','haapy'),
-        ('best','best'),        
+        ('best','best'),  
+        ('cry','cry'),      
     )
     icon = models.CharField(
         max_length=10,
         choices=ICON_CHOICES,
-        default='cry',
+        default='festival',
     )
     key=models.CharField(
         max_length=50,
