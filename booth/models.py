@@ -23,10 +23,10 @@ class Booth(models.Model):
         ('학림관','학림관'),
     )
     location = models.CharField(max_length=10, choices=LOCATION_CHOICES)
-    description = models.CharField(max_length=255)
+    description = models.TextField()
     start_at = models.DateTimeField(null=True, blank=True)
     end_at = models.DateTimeField(null=True, blank=True)
-    insta_url = models.URLField(default="http://www.instagram.com/your_username/")
+    insta_url = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.name
