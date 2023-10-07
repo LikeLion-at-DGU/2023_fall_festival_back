@@ -13,6 +13,8 @@ class Chat(models.Model):
         ('festival','festival'),
         ('fire','fire'),
         ('heart','heart'),
+        ('haapy','haapy'),
+        ('best','best'),        
     )
     icon = models.CharField(
         max_length=10,
