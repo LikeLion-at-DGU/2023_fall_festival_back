@@ -86,4 +86,4 @@ jobs:
           docker stop festival2023-was
           docker rm festival2023-was
           docker image rm ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}
-          docker run -d --net festival -v festival-media:/app/media -v festival-static:/app/static -p 8000:8000 --name festival2023-was ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}
+          docker run -d --net festival -v festival-media:/app/media -v festival-static:/app/static -e TZ=Asia/Seoul -p 8000:8000 --name festival2023-was ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}
