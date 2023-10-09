@@ -21,6 +21,8 @@ from django.conf.urls.static import static
 #swagger
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+# for load env
+from decouple import config
 
 schema_view = get_schema_view(
 openapi.Info(
@@ -34,8 +36,8 @@ openapi.Info(
 public=True,)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("api/v1/", include('notice.urls')),
+    path(config('ADMIN_PATH'), admin.site.urls),
+    path('api/v1/', include('notice.urls')),
     path('api/v1/', include('booth.urls')),
     path('api/v1/', include('chat.urls')),
     
