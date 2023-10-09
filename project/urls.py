@@ -36,6 +36,7 @@ openapi.Info(
 public=True,)
 
 urlpatterns = [
+    # .env에서 불러옴
     path(config('ADMIN_PATH'), admin.site.urls),
     path('api/v1/', include('notice.urls')),
     path('api/v1/', include('booth.urls')),
