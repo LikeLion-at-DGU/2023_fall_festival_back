@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG_VALUE', default=True)
+DEBUG = config('DEBUG_VALUE', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['*']
 
@@ -102,9 +102,9 @@ CORS_ALLOWED_ORIGINS = [
     'http://175.45.200.133:5173',
     'http://175.45.200.133:3000',
 
-    'http://www.dgu-yadan.site',
-    'http://www.dgu-yadan.site:5173',
-    'http://www.dgu-yadan.site:3000',
+    # 'http://www.dgu-yadan.site',
+    # 'http://www.dgu-yadan.site:5173',
+    # 'http://www.dgu-yadan.site:3000',
 
 
     'http://dgu-yadan.site',
