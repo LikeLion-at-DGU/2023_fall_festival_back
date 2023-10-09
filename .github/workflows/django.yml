@@ -21,6 +21,7 @@ jobs:
       run: |
         touch .env
         echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
+        echo ADMIN_PATH=${{ secrets.ADMIN_PATH }} >> .env
         echo DEBUG_VALUE=${{ secrets.DEBUG_VALUE }} >> .env
         echo DJANGO_DEPLOY=${{ secrets.DJANGO_DEPLOY }} >> .env
         echo DATABASE_ENGINE=${{ secrets.DATABASE_ENGINE }} >> .env
