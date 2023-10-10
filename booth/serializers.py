@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import Booth, Booth_like, Booth_image
 
+from datetime import datetime
+
 class BoothImageSerializer(serializers.ModelSerializer):
     image = serializers.ImageField(use_url=True)
     
@@ -50,9 +52,17 @@ class BoothSerializer(serializers.ModelSerializer):
     during = serializers.SerializerMethodField()
     
     def get_during(self, instance):
-        start = str(instance.start_at)
-        end = str(instance.end_at)
-        during = start[:4] + '.' + start[5:7] + '.' + start[8:10] + ' ' + start[11:16] + '~' + end[11:16]
+        start = instance.start_at
+        end = instance.end_at
+        difference = end - start
+
+        if difference.days < 1:
+            # 날짜 차이가 1보다 작을 경우
+            during = f"{start.strftime('%Y.%m.%d %H:%M')}~{end.strftime('%H:%M')}"
+        else:
+            # 날짜 차이가 1 이상일 경우"
+            during = f"{start.strftime('%Y.%m.%d')}~{end.strftime('%d')} {start.strftime('%H:%M')}~{end.strftime('%H:%M')}"
+
         return during
     
     is_liked = serializers.SerializerMethodField()
