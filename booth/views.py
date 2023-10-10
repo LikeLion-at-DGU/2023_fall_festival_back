@@ -27,6 +27,7 @@ class BoothViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Retrie
     pagination_class = BoothPagination
     filter_backends = [DjangoFilterBackend]
     filterset_class = BoothFilter
+    throttle_scope='likes'
     
     def get_queryset(self):
         queryset = Booth.objects.annotate(
@@ -51,7 +52,7 @@ class BoothViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Retrie
         return Response( top3_serializer.data )
 
     # 좋아요
-    @action(methods=['POST', 'DELETE'], detail=True)
+    @action(methods=['POST', 'DELETE'], detail=True, throttle_scope='likes')
     def likes(self, request, pk=None):
         booth = self.get_object()
         booth_id = str(booth.id)

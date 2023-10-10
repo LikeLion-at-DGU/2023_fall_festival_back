@@ -41,6 +41,7 @@ class ChatViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Retri
         return queryset
     serializer_class = ChatSerializer
     pagination_class = ChatPagination
+    throttle_scope='chat'
 
     def create(self, request):
         key = request.COOKIES.get('key')
