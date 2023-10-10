@@ -32,7 +32,7 @@ class BoothViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Retrie
     def get_queryset(self):
         queryset = Booth.objects.annotate(
             like_cnt = Count('likes'),
-            date = Extract('start_at', 'day')
+            date = Extract('end_at', 'day')
         )
         return queryset
 
