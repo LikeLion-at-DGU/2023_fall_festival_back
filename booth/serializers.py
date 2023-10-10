@@ -58,7 +58,7 @@ class BoothSerializer(serializers.ModelSerializer):
 
         if difference.days < 1:
             # 날짜 차이가 1보다 작을 경우
-            during = f"{start.strftime('%Y.%m.%d %H:%M')} ~ {end.strftime('%H:%M')}"
+            during = f"{start.strftime('%Y.%m.%d %H:%M')}~{end.strftime('%H:%M')}"
         else:
             # 날짜 차이가 1 이상일 경우"
             during = f"{start.strftime('%Y.%m.%d')}~{end.strftime('%d')} {start.strftime('%H:%M')}~{end.strftime('%H:%M')}"
