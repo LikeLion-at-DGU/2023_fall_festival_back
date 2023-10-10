@@ -15,12 +15,14 @@ from .serializers import BoothListSerializer, BoothSerializer, LikeSerializer
 from .paginations import BoothPagination
 
 class BoothFilter(filters.FilterSet):
-    date = filters.NumberFilter(field_name='date')
+    # date = filters.NumberFilter(field_name='date')
+    start_date = filters.NumberFilter(field_name='start_date')
+    end_date = filters.NumberFilter(field_name='end_date')
     type = filters.MultipleChoiceFilter(field_name='type', choices=Booth.TYPE_CHOICES)
 
     class Meta:
         model = Booth
-        fields = ['location', 'type', 'date']
+        fields = ['location', 'type', 'start_date', 'end_date']
 
 class BoothViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin):
 
@@ -32,7 +34,9 @@ class BoothViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Retrie
     def get_queryset(self):
         queryset = Booth.objects.annotate(
             like_cnt = Count('likes'),
-            date = Extract('start_at', 'day')
+            # date = Extract('end_at', 'day')
+            start_date = Extract('start_at', 'day'),
+            end_date = Extract('end_at', 'day')
         )
         return queryset
 
