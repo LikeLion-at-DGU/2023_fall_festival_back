@@ -170,7 +170,7 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.ScopedRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'anon': '1000/minute',
+        'anon': '10000/minute',
         'user' : '1000/hour',
         'chat' : '10/minute',
         'likes': '100/minute',
