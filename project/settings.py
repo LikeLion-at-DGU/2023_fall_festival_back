@@ -172,7 +172,7 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'anon': '1000/minute',
         'user' : '1000/hour',
-        'chat' : '50/minute',
+        'chat' : '10/minute',
         'likes': '100/minute',
     }
 }
