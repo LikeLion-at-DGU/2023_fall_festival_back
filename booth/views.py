@@ -49,9 +49,9 @@ class BoothViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.Retrie
     @action(methods=['GET'], detail=False)
     def hot(self, request):
         # 실제로 서비스하면 아래 코드로 바꾸겟습니다.
-        # current_time = timezone.now()
-        # top3 = self.get_queryset().filter(start_at__lte=current_time, end_at__gte=current_time).order_by('-like_cnt')[:3]
-        top3 = self.get_queryset().order_by('-like_cnt')[:3]
+        current_time = timezone.now()
+        top3 = self.get_queryset().filter(start_at__lte=current_time, end_at__gte=current_time).order_by('-like_cnt')[:3]
+        # top3 = self.get_queryset().order_by('-like_cnt')[:3]
         top3_serializer = BoothListSerializer(top3, many=True, context = {'request': request})
         return Response( top3_serializer.data )
 
