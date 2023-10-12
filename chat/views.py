@@ -37,7 +37,7 @@ def censor_content(content):
 class ChatViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mixins.ListModelMixin, mixins.CreateModelMixin):
     # queryset 가져오는 함수 오버라이딩 (최신순으로 정렬)
     def get_queryset(self):
-        queryset = Chat.objects.filter(id__lte=719, id__gte=925).order_by('-created_at')
+        queryset = Chat.objects.order_by('-created_at')
         return queryset
     serializer_class = ChatSerializer
     pagination_class = ChatPagination
