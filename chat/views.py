@@ -34,40 +34,40 @@ def censor_content(content):
             
     return content, is_abused
 
-class ChatViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mixins.ListModelMixin):
+class ChatViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mixins.ListModelMixin, mixins.CreateModelMixin):
     # queryset 가져오는 함수 오버라이딩 (최신순으로 정렬)
     def get_queryset(self):
-        queryset = Chat.objects.filter(id__lte=719).order_by('-created_at')
+        queryset = Chat.objects.filter(id__lte=719, id__gte=925).order_by('-created_at')
         return queryset
     serializer_class = ChatSerializer
     pagination_class = ChatPagination
     throttle_scope='chat'
 
-    # def create(self, request):
-    #     key = request.COOKIES.get('key')
-    #     if not key:
-    #         key = str(uuid4())
+    def create(self, request):
+        key = request.COOKIES.get('key')
+        if not key:
+            key = str(uuid4())
 
-    #     cooltime_report = Chat.objects.filter(key=key).first()
-    #     if cooltime_report:
-    #         time_since_last_post = timezone.now() - cooltime_report.created_at
+        cooltime_report = Chat.objects.filter(key=key).first()
+        if cooltime_report:
+            time_since_last_post = timezone.now() - cooltime_report.created_at
 
-    #         # 현재 대기시간 30초로 설정
-    #         if time_since_last_post < timedelta(seconds=30):
-    #             return Response({'detail': '30초에 한 번만 글을 게시할 수 있습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+            # 현재 대기시간 30초로 설정
+            if time_since_last_post < timedelta(seconds=30):
+                return Response({'detail': '30초에 한 번만 글을 게시할 수 있습니다.'}, status=status.HTTP_400_BAD_REQUEST)
         
-    #     content = request.data.get('content')
-    #     censored_content, is_abused = censor_content(content)
+        content = request.data.get('content')
+        censored_content, is_abused = censor_content(content)
 
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save(key = key, content = censored_content, is_abused = is_abused)
-    #     headers = self.get_success_headers(serializer.data)
-    #     response = Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(key = key, content = censored_content, is_abused = is_abused)
+        headers = self.get_success_headers(serializer.data)
+        response = Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
-    #     # 현재 대기시간 30초로 설정
-    #     response.set_cookie('key', key, max_age=30)
-    #     return response
+        # 현재 대기시간 30초로 설정
+        response.set_cookie('key', key, max_age=30)
+        return response
 
     # 방명록의 왼쪽 열에 대한 api
     @action(detail=False, methods=['GET'], url_path='dataleft')
